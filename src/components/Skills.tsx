@@ -1,33 +1,12 @@
 
-import { useEffect, useRef } from 'react';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import { MY_STACK } from '@/lib/skillsData';
 
 export const Skills = () => {
-  const skillsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const slideUpElements = entry.target.querySelectorAll('.slide-up');
-            slideUpElements.forEach((el, index) => {
-              setTimeout(() => {
-                el.classList.add('animate-fade-in');
-              }, index * 100);
-            });
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (skillsRef.current) {
-      observer.observe(skillsRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const skillsRef = useIntersectionObserver({ 
+    threshold: 0.1, 
+    triggerOnce: true 
+  });
 
   return (
     <section id="skills" ref={skillsRef} className="py-20">
@@ -54,10 +33,10 @@ export const Skills = () => {
                     <div className="w-10 h-10 flex items-center justify-center">
                       <img
                         src={skill.icon}
-                        alt={skill.name}
+                        alt={`${skill.name} icon`}
                         className="w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-200"
+                        loading="lazy"
                         onError={(e) => {
-                          // Fallback for broken images
                           e.currentTarget.style.display = 'none';
                         }}
                       />
