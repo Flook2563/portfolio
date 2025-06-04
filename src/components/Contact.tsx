@@ -1,62 +1,45 @@
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
-
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-}
-
-const initialFormData: FormData = {
-  name: '',
-  email: '',
-  message: ''
-};
-
-const contactInfo = [
-  {
-    icon: Mail,
-    title: 'Email',
-    value: 'hello@example.com',
-    key: 'email'
-  },
-  {
-    icon: Phone,
-    title: 'Phone',
-    value: '+1 (555) 123-4567',
-    key: 'phone'
-  },
-  {
-    icon: MapPin,
-    title: 'Location',
-    value: 'San Francisco, CA',
-    key: 'location'
-  }
-];
 
 export const Contact = () => {
-  const contactRef = useIntersectionObserver({ 
-    threshold: 0.1, 
-    triggerOnce: true 
+  const contactRef = useRef<HTMLDivElement>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
   });
-  
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const elements = contactRef.current?.querySelectorAll('.animate-on-scroll');
+    elements?.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
     // Handle form submission here
-    setFormData(initialFormData);
+    setFormData({ name: '', email: '', message: '' });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   return (
@@ -76,17 +59,35 @@ export const Contact = () => {
             </p>
 
             <div className="space-y-6">
-              {contactInfo.map(({ icon: Icon, title, value, key }) => (
-                <div key={key} className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Icon className="text-primary" size={20} />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">{title}</h4>
-                    <p className="text-muted-foreground">{value}</p>
-                  </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <Mail className="text-primary" size={20} />
                 </div>
-              ))}
+                <div>
+                  <h4 className="font-medium">Email</h4>
+                  <p className="text-muted-foreground">hello@example.com</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <Phone className="text-primary" size={20} />
+                </div>
+                <div>
+                  <h4 className="font-medium">Phone</h4>
+                  <p className="text-muted-foreground">+1 (555) 123-4567</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <MapPin className="text-primary" size={20} />
+                </div>
+                <div>
+                  <h4 className="font-medium">Location</h4>
+                  <p className="text-muted-foreground">San Francisco, CA</p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -137,7 +138,7 @@ export const Contact = () => {
                   rows={5}
                   className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors bg-background resize-none"
                   placeholder="Tell me about your project..."
-                />
+                ></textarea>
               </div>
 
               <button

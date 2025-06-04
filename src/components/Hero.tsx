@@ -1,20 +1,31 @@
 
+import { useEffect, useRef } from 'react';
 import { ArrowDown } from 'lucide-react';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 export const Hero = () => {
-  const heroRef = useIntersectionObserver({ 
-    threshold: 0.1, 
-    triggerOnce: true 
-  });
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const elements = heroRef.current?.querySelectorAll('.animate-on-scroll');
+    elements?.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section 
-      id="home" 
-      ref={heroRef} 
-      className="min-h-screen flex items-center justify-center relative overflow-hidden"
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10" />
+    <section id="home" ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10"></div>
       
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
