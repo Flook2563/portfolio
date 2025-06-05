@@ -92,8 +92,12 @@ export const About = () => {
                 className="rounded-full shadow-lg w-40 h-40 md:w-48 md:h-48 mx-auto hover:scale-105 hover:shadow-xl transition-transform duration-300 ease-in-out" // Added hover effects
               />
               <div className="mt-3 mb-3 text-center">
-                <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full hover:scale-110 hover:shadow-lg transition-all duration-300 ease-in-out cursor-default">
-                  DEV
+                <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full hover:scale-110 hover:shadow-lg transition-all duration-300 ease-in-out cursor-default inline-flex items-center">
+                  <span className="relative flex h-2 w-2 mr-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  </span>
+                  Online
                 </span>
               </div>
               <h3 className="text-3xl font-bold text-center text-foreground mb-1">Nattanon Hanpap</h3>
