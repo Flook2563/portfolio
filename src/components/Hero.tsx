@@ -86,13 +86,13 @@ export const Hero = () => {
             
             <div className="ml-4 mt-1">
               <span className="text-purple-400">skills</span><span className="text-white">:</span> <span className="text-white">[</span>
-              <span className="text-green-400">'React'</span><span className="text-white">,</span> <span className="text-green-400">'Node.js'</span><span className="text-white">,</span> <span className="text-green-400">'Python'</span>
+              <span className="text-green-400">'React'</span><span className="text-white">,</span> <span className="text-green-400">'Node.js'</span><span className="text-white">,</span> <span className="text-green-400">'Golang'</span>
               <span className="text-white">],</span>
             </div>
             
             <div className="ml-4 mt-1">
               <span className="text-purple-400">focuses</span><span className="text-white">:</span> <span className="text-white">[</span>
-              <span className="text-green-400">'Full-Stack'</span><span className="text-white">,</span> <span className="text-green-400">'UI/UX'</span>
+              <span className="text-green-400">'Full-Stack'</span><span className="text-white">,</span> <span className="text-green-400">'Backend'</span>
               <span className="text-white">],</span>
             </div>
             
