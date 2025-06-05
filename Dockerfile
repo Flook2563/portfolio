@@ -1,23 +1,14 @@
-# Use the official Node.js image as the base image
-FROM node:18-alpine
-
-# Set the working directory in the container
+# Build stage
+FROM node:18-alpine as build
 WORKDIR /app
-
-# Copy package.json and package-lock.json to the container
-COPY package.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code to the container
+COPY package*.json ./
+RUN npm ci --only=production
 COPY . .
-
-# Build the application
 RUN npm run build
 
-# Expose the port the application runs on
-EXPOSE 3100
-
-# Start the application
-CMD ["npm", "run", "dev"]
+# Production stage
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

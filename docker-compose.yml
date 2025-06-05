@@ -1,12 +1,8 @@
 version: '3.8'
-
 services:
   portfolio:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: botflook/portfolio:latest
+    container_name: portfolio-app
     ports:
-      - "3100:3100"
-    volumes:
-      - /www/wwwroot/flookcodelab.com:/app
-    restart: always
+      - "3100:80"  # เปลี่ยนพอร์ตตามต้องการ
+    restart: unless-stopped
