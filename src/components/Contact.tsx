@@ -31,7 +31,7 @@ export const Contact = () => {
 
         <div className="animate-on-scroll flex flex-wrap justify-center items-center gap-8 md:gap-12">
           <a 
-            href="mailto:hello@example.com" 
+            href="mailto:Flook2563@gmail.com" 
             className="flex flex-col items-center gap-2 p-6 hover:bg-background rounded-xl transition-all duration-300 group"
             aria-label="Email"
           >
@@ -39,11 +39,11 @@ export const Contact = () => {
               <Mail className="text-primary" size={24} />
             </div>
             <h3 className="font-medium text-lg">Email</h3>
-            <p className="text-muted-foreground">hello@example.com</p>
+            <p className="text-muted-foreground">Flook2563@gmail.com</p>
           </a>
 
           <a 
-            href="tel:+15551234567" 
+            href="tel:+66902693680" 
             className="flex flex-col items-center gap-2 p-6 hover:bg-background rounded-xl transition-all duration-300 group"
             aria-label="Phone"
           >
@@ -51,11 +51,11 @@ export const Contact = () => {
               <Phone className="text-primary" size={24} />
             </div>
             <h3 className="font-medium text-lg">Phone</h3>
-            <p className="text-muted-foreground">+1 (555) 123-4567</p>
+            <p className="text-muted-foreground">+66 90 269 3680</p>
           </a>
 
           <a 
-            href="https://github.com/" 
+            href="https://github.com/Flook2563" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="flex flex-col items-center gap-2 p-6 hover:bg-background rounded-xl transition-all duration-300 group"
@@ -65,11 +65,11 @@ export const Contact = () => {
               <Github className="text-primary" size={24} />
             </div>
             <h3 className="font-medium text-lg">GitHub</h3>
-            <p className="text-muted-foreground">github.com/username</p>
+            <p className="text-muted-foreground">Flook2563</p>
           </a>
 
           <a 
-            href="https://linkedin.com/in/" 
+            href="https://linkedin.com/in/nattanon-hanpap-6a32791b2/" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="flex flex-col items-center gap-2 p-6 hover:bg-background rounded-xl transition-all duration-300 group"
@@ -79,11 +79,11 @@ export const Contact = () => {
               <Linkedin className="text-primary" size={24} />
             </div>
             <h3 className="font-medium text-lg">LinkedIn</h3>
-            <p className="text-muted-foreground">linkedin.com/in/username</p>
+            <p className="text-muted-foreground">Nattanon Hanpap</p>
           </a>
 
           <a 
-            href="https://facebook.com/" 
+            href="https://facebook.com/FlookNattanon" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="flex flex-col items-center gap-2 p-6 hover:bg-background rounded-xl transition-all duration-300 group"
@@ -93,7 +93,7 @@ export const Contact = () => {
               <Facebook className="text-primary" size={24} />
             </div>
             <h3 className="font-medium text-lg">Facebook</h3>
-            <p className="text-muted-foreground">facebook.com/username</p>
+            <p className="text-muted-foreground">Flook Nattanon</p>
           </a>
         </div>
       </div>
