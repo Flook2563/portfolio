@@ -38,9 +38,8 @@ export const Skills = () => {
 
         <div className="space-y-20">
           {Object.entries(MY_STACK).map(([category, skills]) => (
-            <div className="grid sm:grid-cols-12 gap-8" key={category}>
-              <div className="sm:col-span-5">
-                <h3 className="slide-up text-5xl font-bold leading-none text-muted-foreground uppercase tracking-wider">
+            <div className="grid sm:grid-cols-12 gap-8" key={category}>              <div className="sm:col-span-5">
+                <h3 className="slide-up text-3xl font-bold leading-none text-muted-foreground uppercase tracking-wider">
                   {category}
                 </h3>
               </div>
