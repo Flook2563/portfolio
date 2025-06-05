@@ -1,14 +1,9 @@
 
-import { useEffect, useRef, useState } from 'react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { Mail, Phone, Github, Linkedin, Facebook } from 'lucide-react';
 
 export const Contact = () => {
   const contactRef = useRef<HTMLDivElement>(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -27,129 +22,79 @@ export const Contact = () => {
 
     return () => observer.disconnect();
   }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission here
-    setFormData({ name: '', email: '', message: '' });
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
   return (
-    <section id="contact" ref={contactRef} className="py-20">
+    <section id="contact" ref={contactRef} className="py-20 bg-primary/5">
       <div className="container mx-auto px-6">
         <h2 className="animate-on-scroll text-5xl font-bold mb-16 text-center">
-          Get In Touch
+          Contact Me
         </h2>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          <div className="animate-on-scroll">
-            <h3 className="text-2xl font-bold mb-6">Let's Work Together</h3>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              I'm always interested in hearing about new projects and opportunities.
-              Whether you're a company looking to hire, or you're a fellow developer
-              who wants to collaborate, I'd love to hear from you.
-            </p>
-
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <Mail className="text-primary" size={20} />
-                </div>
-                <div>
-                  <h4 className="font-medium">Email</h4>
-                  <p className="text-muted-foreground">hello@example.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <Phone className="text-primary" size={20} />
-                </div>
-                <div>
-                  <h4 className="font-medium">Phone</h4>
-                  <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <MapPin className="text-primary" size={20} />
-                </div>
-                <div>
-                  <h4 className="font-medium">Location</h4>
-                  <p className="text-muted-foreground">San Francisco, CA</p>
-                </div>
-              </div>
+        <div className="animate-on-scroll flex flex-wrap justify-center items-center gap-8 md:gap-12">
+          <a 
+            href="mailto:hello@example.com" 
+            className="flex flex-col items-center gap-2 p-6 hover:bg-background rounded-xl transition-all duration-300 group"
+            aria-label="Email"
+          >
+            <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+              <Mail className="text-primary" size={24} />
             </div>
-          </div>
+            <h3 className="font-medium text-lg">Email</h3>
+            <p className="text-muted-foreground">hello@example.com</p>
+          </a>
 
-          <div className="animate-on-scroll">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors bg-background"
-                  placeholder="Your name"
-                />
-              </div>
+          <a 
+            href="tel:+15551234567" 
+            className="flex flex-col items-center gap-2 p-6 hover:bg-background rounded-xl transition-all duration-300 group"
+            aria-label="Phone"
+          >
+            <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+              <Phone className="text-primary" size={24} />
+            </div>
+            <h3 className="font-medium text-lg">Phone</h3>
+            <p className="text-muted-foreground">+1 (555) 123-4567</p>
+          </a>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors bg-background"
-                  placeholder="your.email@example.com"
-                />
-              </div>
+          <a 
+            href="https://github.com/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex flex-col items-center gap-2 p-6 hover:bg-background rounded-xl transition-all duration-300 group"
+            aria-label="GitHub"
+          >
+            <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+              <Github className="text-primary" size={24} />
+            </div>
+            <h3 className="font-medium text-lg">GitHub</h3>
+            <p className="text-muted-foreground">github.com/username</p>
+          </a>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={5}
-                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors bg-background resize-none"
-                  placeholder="Tell me about your project..."
-                ></textarea>
-              </div>
+          <a 
+            href="https://linkedin.com/in/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex flex-col items-center gap-2 p-6 hover:bg-background rounded-xl transition-all duration-300 group"
+            aria-label="LinkedIn"
+          >
+            <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+              <Linkedin className="text-primary" size={24} />
+            </div>
+            <h3 className="font-medium text-lg">LinkedIn</h3>
+            <p className="text-muted-foreground">linkedin.com/in/username</p>
+          </a>
 
-              <button
-                type="submit"
-                className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors duration-200 flex items-center justify-center gap-2"
-              >
-                <Send size={20} />
-                Send Message
-              </button>
-            </form>
-          </div>
+          <a 
+            href="https://facebook.com/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex flex-col items-center gap-2 p-6 hover:bg-background rounded-xl transition-all duration-300 group"
+            aria-label="Facebook"
+          >
+            <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+              <Facebook className="text-primary" size={24} />
+            </div>
+            <h3 className="font-medium text-lg">Facebook</h3>
+            <p className="text-muted-foreground">facebook.com/username</p>
+          </a>
         </div>
       </div>
     </section>
