@@ -25,26 +25,10 @@ export const Projects = () => {
 
   const projects = [
     {
-      title: 'E-Commerce Platform',
-      description: 'A full-stack e-commerce solution built with React, Node.js, and PostgreSQL. Features include user authentication, payment processing, and real-time inventory management.',
+      title: 'Projects Coming Soon',
+      description: 'Coming Soon',
       image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop',
-      tech: ['React', 'Node.js', 'PostgreSQL', 'Stripe'],
-      liveUrl: '#',
-      githubUrl: '#'
-    },
-    {
-      title: 'Task Management App',
-      description: 'A collaborative project management tool with real-time updates, drag-and-drop functionality, and team collaboration features.',
-      image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop',
-      tech: ['Vue.js', 'Express', 'MongoDB', 'Socket.io'],
-      liveUrl: '#',
-      githubUrl: '#'
-    },
-    {
-      title: 'Analytics Dashboard',
-      description: 'A comprehensive analytics dashboard for data visualization with interactive charts, real-time data processing, and custom reporting.',
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop',
-      tech: ['Next.js', 'TypeScript', 'D3.js', 'AWS'],
+      tech: ['Golang', 'PostgreSQL'],
       liveUrl: '#',
       githubUrl: '#'
     }
@@ -54,7 +38,7 @@ export const Projects = () => {
     <section id="projects" ref={projectsRef} className="py-20 bg-secondary/20">
       <div className="container mx-auto px-6">
         <h2 className="animate-on-scroll text-5xl font-bold mb-16 text-center">
-          Featured Projects
+          Projects
         </h2>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
