@@ -4,5 +4,7 @@ services:
     image: botflook/portfolio:latest
     container_name: portfolio-app
     ports:
-      - "80:80"  # เปลี่ยนเป็น port 80 เพื่อให้ Nginx reverse proxy ได้
+      - "3100:80"  # ใช้ port 3100 สำหรับ internal communication
     restart: unless-stopped
+    environment:
+      - NODE_ENV=production
