@@ -59,9 +59,9 @@ pipeline {
                         # สร้างโฟลเดอร์ถ้ายังไม่มี
                         mkdir -p ${DEPLOY_PATH}
                         cd ${DEPLOY_PATH}
-                        
-                        # สร้าง docker-compose.yml
-                        echo "Creating/Updating docker-compose.yml..."                        cat > docker-compose.yml << 'COMPOSE_EOF'
+                          # สร้าง docker-compose.yml
+                        echo "Creating/Updating docker-compose.yml..."
+                        cat > docker-compose.yml << 'COMPOSE_EOF'
 version: '3.8'
 services:
   portfolio:
@@ -99,10 +99,10 @@ EOF
                     echo 'Performing health check...'
                     sh """
                         sleep 15
-                        sshpass -p '${VPS_PASSWORD}' ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
-                        cd ${DEPLOY_PATH}
+                        sshpass -p '${VPS_PASSWORD}' ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'                        cd ${DEPLOY_PATH}
                         
-                        # ตรวจสอบสถานะ container                        if docker-compose ps | grep -q "Up"; then
+                        # ตรวจสอบสถานะ container
+                        if docker-compose ps | grep -q "Up"; then
                             echo "✅ Application is running successfully!"
                             echo "🌐 Access your app at: https://flookcodelab.com"
                         else
