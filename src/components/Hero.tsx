@@ -1,8 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Github, Linkedin, Mail, Circle } from 'lucide-react';
 
 export const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [displayedText, setDisplayedText] = useState('');
+  const [showCursor, setShowCursor] = useState(true);
+  const fullText = 'Nattanon Hanpap'; // 1 ช่องว่าง
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -20,6 +23,45 @@ export const Hero = () => {
     elements?.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
+  }, []);  useEffect(() => {
+    let currentIndex = 0;
+    let isDeleting = false;
+    let typeTimeout: NodeJS.Timeout;
+
+    const typeWriter = () => {
+      if (!isDeleting) {
+        // กำลังพิมพ์
+        if (currentIndex < fullText.length) {
+          setDisplayedText(fullText.slice(0, currentIndex + 1));
+          currentIndex++;
+          typeTimeout = setTimeout(typeWriter, 120); // ความเร็วในการพิมพ์
+        } else {
+          // พิมพ์เสร็จแล้ว รอ 2 วินาที แล้วเริ่มลบ
+          typeTimeout = setTimeout(() => {
+            isDeleting = true;
+            typeWriter();
+          }, 2000);
+        }
+      } else {
+        // กำลังลบ
+        if (currentIndex > 0) {
+          setDisplayedText(fullText.slice(0, currentIndex - 1));
+          currentIndex--;
+          typeTimeout = setTimeout(typeWriter, 80); // ความเร็วในการลบ (เร็วกว่าการพิมพ์)
+        } else {
+          // ลบเสร็จแล้ว รอ 1 วินาที แล้วเริ่มพิมพ์ใหม่
+          isDeleting = false;
+          typeTimeout = setTimeout(typeWriter, 1000);
+        }
+      }
+    };
+
+    // เริ่มต้น typewriter
+    typeTimeout = setTimeout(typeWriter, 500); // รอ 0.5 วินาทีก่อนเริ่ม
+
+    return () => {
+      clearTimeout(typeTimeout);
+    };
   }, []);
 
   return (
@@ -28,10 +70,39 @@ export const Hero = () => {
       
       {/* Left Section - Main Content */}
       <div className="relative z-10 max-w-xl">
-        <p className="animate-on-scroll text-xl mb-2">Hello! I'm</p>
-        
-        <h1 className="animate-on-scroll text-6xl md:text-7xl font-bold mb-3">
-          Nattanon <span className="text-blue-500">Hanpap</span>
+        <p className="animate-on-scroll text-xl mb-2">Hello! I'm</p>        <h1 className="animate-on-scroll text-6xl md:text-7xl font-bold mb-3 font-mono">
+          <span className="inline-flex items-end whitespace-pre">            {displayedText.length > 0 ? (
+              (() => {
+                const firstName = 'Nattanon';
+                const spaces = ' '; // 1 ช่องว่าง
+                const lastName = 'Hanpap';
+                
+                return displayedText.split('').map((char, index) => {
+                  if (char === ' ') {
+                    return <span key={index} className="whitespace-pre"> </span>;
+                  }
+                  
+                  // ตรวจสอบว่าอยู่ในส่วนของนามสกุลหรือไม่
+                  const isInLastName = index > firstName.length + spaces.length - 1;
+                  
+                  return (
+                    <span 
+                      key={index} 
+                      className={isInLastName ? 'text-blue-500' : ''}
+                    >
+                      {char}
+                    </span>
+                  );
+                });
+              })()
+            ) : null}
+            {showCursor && (
+              <span 
+                className="inline-block w-0.5 h-12 md:h-16 bg-blue-500"
+                style={{ animation: 'blink 1s infinite' }}
+              />
+            )}
+          </span>
         </h1>
         
         <p className="animate-on-scroll text-xl md:text-2xl text-muted-foreground mb-6">
