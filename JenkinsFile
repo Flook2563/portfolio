@@ -1,0 +1,140 @@
+pipeline {
+    agent any
+    
+    environment {
+        VPS_USER = "${env.VPS_USER}"
+        VPS_HOST = "${env.VPS_HOST}"
+        VPS_PASSWORD = "${env.VPS_PASSWORD}"
+        DOCKER_IMAGE_NAME = "botflook/portfolio"
+        DOCKER_HUB_CREDENTIALS_ID = 'docker-hub-credentials'
+        BUILD_TAG = "${BUILD_NUMBER}"
+        DEPLOY_PATH = "/root/deploy/portfolio"
+    }
+    
+    stages {
+        stage('Checkout Code') {
+            steps {
+                echo 'Checking out code from GitHub...'
+                git url: 'git@github-flook2563:Flook2563/portfolio.git', branch: 'main'
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    echo 'Building Docker Image...'
+                    sh """
+                        docker build -t ${DOCKER_IMAGE_NAME}:${BUILD_TAG} .
+                        docker tag ${DOCKER_IMAGE_NAME}:${BUILD_TAG} ${DOCKER_IMAGE_NAME}:latest
+                    """
+                    echo "Docker image built successfully: ${DOCKER_IMAGE_NAME}:${BUILD_TAG}"
+                }
+            }
+        }
+        
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    echo 'Pushing Docker Image to Docker Hub...'
+                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_HUB_CREDENTIALS_ID}") {
+                        sh """
+                            docker push ${DOCKER_IMAGE_NAME}:${BUILD_TAG}
+                            docker push ${DOCKER_IMAGE_NAME}:latest
+                        """
+                    }
+                    echo "Images pushed successfully to Docker Hub"
+                }
+            }
+        }
+        
+        stage('Deploy to VPS') {
+            steps {
+                script {
+                    echo 'Deploying to VPS...'
+                    sh """
+                        sshpass -p '${VPS_PASSWORD}' ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
+                        set -e
+                        echo "Connected to VPS successfully"
+                        
+                        # สร้างโฟลเดอร์ถ้ายังไม่มี
+                        mkdir -p ${DEPLOY_PATH}
+                        cd ${DEPLOY_PATH}
+                        
+                        # สร้าง docker-compose.yml
+                        echo "Creating/Updating docker-compose.yml..."                        cat > docker-compose.yml << 'COMPOSE_EOF'
+version: '3.8'
+services:
+  portfolio:
+    image: ${DOCKER_IMAGE_NAME}:latest
+    container_name: portfolio-app
+    ports:
+      - "8080:80"  # ใช้ port 8080 สำหรับ internal communication
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+COMPOSE_EOF
+                        
+                        echo "Stopping existing containers..."
+                        docker-compose down || true
+                        
+                        echo "Pulling latest image..."
+                        docker-compose pull
+                        
+                        echo "Starting new containers..."
+                        docker-compose up -d
+                        
+                        echo "Deployment completed successfully!"
+                        
+                        # แสดงสถานะ containers
+                        docker-compose ps
+EOF
+                    """
+                }
+            }
+        }
+        
+        stage('Health Check') {
+            steps {
+                script {
+                    echo 'Performing health check...'
+                    sh """
+                        sleep 15
+                        sshpass -p '${VPS_PASSWORD}' ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
+                        cd ${DEPLOY_PATH}
+                        
+                        # ตรวจสอบสถานะ container                        if docker-compose ps | grep -q "Up"; then
+                            echo "✅ Application is running successfully!"
+                            echo "🌐 Access your app at: https://flookcodelab.com"
+                        else
+                            echo "❌ Application failed to start"
+                            echo "Container logs:"
+                            docker-compose logs
+                            exit 1
+                        fi
+EOF
+                    """
+                }
+            }
+        }
+    }
+    
+    post {        success {
+            echo "🎉 Pipeline completed successfully!"
+            echo "📱 Your React app is now live at: https://flookcodelab.com"
+        }
+        failure {
+            echo "❌ Pipeline failed. Check the logs above for details."
+        }
+        always {
+            script {
+                // ทำความสะอาด Docker images ใน Jenkins
+                sh """
+                    docker rmi ${DOCKER_IMAGE_NAME}:${BUILD_TAG} || true
+                    docker rmi ${DOCKER_IMAGE_NAME}:latest || true
+                    docker system prune -f || true
+                """
+            }
+            cleanWs()
+        }
+    }
+}

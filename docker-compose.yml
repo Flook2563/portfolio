@@ -4,5 +4,5 @@ services:
     image: botflook/portfolio:latest
     container_name: portfolio-app
     ports:
-      - "3100:80"  # เปลี่ยนพอร์ตตามต้องการ
+      - "80:80"  # เปลี่ยนเป็น port 80 เพื่อให้ Nginx reverse proxy ได้
     restart: unless-stopped
