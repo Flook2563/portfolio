@@ -68,7 +68,7 @@ services:
     image: ${DOCKER_IMAGE_NAME}:latest
     container_name: portfolio-app
     ports:
-      - "8080:80"  # ใช้ port 8080 สำหรับ internal communication
+      - "3100:80"  # ใช้ port 3100 สำหรับ internal communication
     restart: unless-stopped
     environment:
       - NODE_ENV=production
