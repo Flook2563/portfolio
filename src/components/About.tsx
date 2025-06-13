@@ -1,5 +1,47 @@
 import { useEffect, useRef } from 'react';
 
+// Experience data constant
+const experienceData = [
+  {
+    position: "Golang Developer",
+    company: "Kiatnakin Phatra Financial Group",
+    period: "Oct. 2024 - Present",
+    startDate: "2024-10-01",
+    endDate: null,    
+    current: true,
+    workType: "Contract"
+  },
+  {
+    position: "Full-Stack Developer", 
+    company: "Avalant Co., Ltd.",
+    period: "2021 - 2024",
+    startDate: "2021-05-17",
+    endDate: "2024-09-02",    
+    current: false,
+    workType: "Full-time"
+  }
+];
+
+const calculateDuration = (startDate: string, endDate: string | null, current: boolean) => {
+  const start = new Date(startDate);
+  const end = current ? new Date() : new Date(endDate!);
+  
+  const diffTime = Math.abs(end.getTime() - start.getTime());
+  const diffYears = diffTime / (1000 * 60 * 60 * 24 * 365.25);
+  
+  if (diffYears >= 1) {
+    const years = Math.floor(diffYears);
+    const months = Math.floor((diffYears - years) * 12);
+      if (months === 0) {
+      return `${years} ${years === 1 ? 'year' : 'years'}`;
+    } else {
+      return `${years} ${years === 1 ? 'year' : 'years'} ${months} ${months === 1 ? 'month' : 'months'}`;
+    }  } else {
+    const months = Math.floor(diffYears * 12);
+    return `${months} ${months === 1 ? 'month' : 'months'}`;
+  }
+};
+
 export const About = () => {
   const aboutRef = useRef<HTMLDivElement>(null);
 
@@ -59,26 +101,44 @@ export const About = () => {
                       <span className="text-xs bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded-full font-medium">GPA : 3.82</span>
                     </div>
                   </div>
-                </div>
-
-                {/* Experience Card */}
+                </div>                  {/* Experience Card */}
                 <div className="bg-secondary p-6 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 ease-in-out">
                   <h3 className="text-xl font-semibold text-primary mb-4 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-6 w-6 lucide lucide-briefcase"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                     Experience
                   </h3>
-                  {/* Most Recent Experience First */}
-                  <div className="mb-4">
-                    <h4 className="font-semibold text-lg text-foreground">Golang Developer</h4>
-                    <p className="text-foreground/75 text-sm mt-1">Kiatnakin Phatra Financial Group</p>
-                    <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium mt-1 inline-block">
-                      Oct. 2024 - <span className="font-bold">Present</span>
-                    </span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-lg text-foreground">Full-Stack Developer</h4>
-                    <p className="text-foreground/75 text-sm mt-1">Avalant Co., Ltd.</p>
-                    <span className="text-xs bg-primary/10 text-primary px-2 py-0.5  rounded-full font-medium mt-1 inline-block">2021 - 2024</span>
+                    {/* Scrollable container for experiences */}
+                  <div className="max-h-64 overflow-y-auto scrollbar-hide">
+                    {experienceData.map((exp, index) => (
+                      <div key={index} className={`${index > 0 ? 'mt-4 pt-4 border-t border-border/50' : ''}`}>                      {/* Two-column layout for position and duration */}
+                        <div className="flex justify-between items-start mb-1">
+                          <h4 className="font-semibold text-lg text-foreground flex-1">{exp.position}</h4>
+                          <div className="text-right ml-4 flex flex-col gap-1">
+                            <span className="text-sm font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">
+                              {calculateDuration(exp.startDate, exp.endDate, exp.current)}
+                            </span>
+                          </div>
+                        </div>
+                        {/* Company and work type */}
+                        <div className="flex justify-between items-center mb-2">
+                          <p className="text-foreground/75 text-sm">{exp.company}</p>
+                          <span className="text-xs bg-blue-500/10 text-blue-600 px-2 py-0.5 rounded-full font-medium">
+                            {exp.workType}
+                          </span>
+                        </div>
+                        
+                        {/* Period */}
+                        <span className="text-xs bg-secondary-foreground/10 text-secondary-foreground px-2 py-0.5 rounded-full font-medium inline-block">
+                          {exp.current ? (
+                            <>
+                              {exp.period.split(' - ')[0]} - <span className="font-bold">Present</span>
+                            </>
+                          ) : (
+                            exp.period
+                          )}
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

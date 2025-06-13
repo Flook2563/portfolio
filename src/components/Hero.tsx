@@ -64,14 +64,13 @@ export const Hero = () => {
     };
   }, []);
 
-  return (
-    <section id="home" ref={heroRef} className="min-h-screen flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20 relative overflow-hidden px-6">
+  return (    <section id="home" ref={heroRef} className="min-h-screen flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20 relative overflow-hidden px-6 pt-20 sm:pt-24 md:pt-0">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10"></div>
       
       {/* Left Section - Main Content */}
       <div className="relative z-10 max-w-xl">
-        <p className="animate-on-scroll text-xl mb-2">Hello! I'm</p>        <h1 className="animate-on-scroll text-6xl md:text-7xl font-bold mb-3 font-mono">
-          <span className="inline-flex items-end whitespace-pre">            {displayedText.length > 0 ? (
+        <p className="animate-on-scroll text-lg sm:text-xl mb-2">Hello! I'm</p><h1 className="animate-on-scroll text-4xl sm:text-6xl md:text-7xl font-bold mb-3 font-mono">
+          <span className="inline-flex items-end whitespace-pre min-w-[280px] sm:min-w-[420px] md:min-w-[580px]">{displayedText.length > 0 ? (
               (() => {
                 const firstName = 'Nattanon';
                 const spaces = ' '; // 1 ช่องว่าง
@@ -95,10 +94,9 @@ export const Hero = () => {
                   );
                 });
               })()
-            ) : null}
-            {showCursor && (
+            ) : null}            {showCursor && (
               <span 
-                className="inline-block w-0.5 h-12 md:h-16 bg-blue-500"
+                className="inline-block w-0.5 h-8 sm:h-12 md:h-16 bg-blue-500"
                 style={{ animation: 'blink 1s infinite' }}
               />
             )}
