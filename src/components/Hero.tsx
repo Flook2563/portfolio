@@ -69,7 +69,7 @@ export const Hero = () => {
       
       {/* Left Section - Main Content */}
       <div className="relative z-10 max-w-xl">
-        <p className="animate-on-scroll text-lg sm:text-xl mb-2">Hello! I'm</p><h1 className="animate-on-scroll text-4xl sm:text-6xl md:text-7xl font-bold mb-3 font-mono">
+        <p className="animate-on-scroll text-lg sm:text-xl mb-2">Hello! I'm</p>        <h1 className="animate-on-scroll text-4xl sm:text-6xl md:text-7xl font-bold mb-3 font-mono">
           <span className="inline-flex items-end whitespace-pre min-w-[280px] sm:min-w-[420px] md:min-w-[580px]">{displayedText.length > 0 ? (
               (() => {
                 const firstName = 'Nattanon';
@@ -87,7 +87,7 @@ export const Hero = () => {
                   return (
                     <span 
                       key={index} 
-                      className={isInLastName ? 'text-blue-500' : ''}
+                      className={isInLastName ? 'text-primary' : 'text-foreground'}
                     >
                       {char}
                     </span>
@@ -96,7 +96,7 @@ export const Hero = () => {
               })()
             ) : null}            {showCursor && (
               <span 
-                className="inline-block w-0.5 h-8 sm:h-12 md:h-16 bg-blue-500"
+                className="inline-block w-0.5 h-8 sm:h-12 md:h-16 bg-primary"
                 style={{ animation: 'blink 1s infinite' }}
               />
             )}
@@ -126,13 +126,11 @@ export const Hero = () => {
             </a>
           </div>
         </div>
-      </div>
-
-      {/* Right Section - Code Window */}
-      <div className="animate-on-scroll relative z-10 w-full max-w-md rounded-lg overflow-hidden border border-gray-800 shadow-2xl">
-        <div className="bg-[#1e1e2e] text-white font-mono">
+      </div>      {/* Right Section - Code Window */}
+      <div className="animate-on-scroll relative z-10 w-full max-w-md rounded-lg overflow-hidden border border-border shadow-2xl">
+        <div className="bg-[#1e1e2e] dark:bg-[#1e1e2e] text-white font-mono">
           {/* Window Header */}
-          <div className="flex items-center justify-between px-4 py-2 bg-[#181825] border-b border-gray-800">
+          <div className="flex items-center justify-between px-4 py-2 bg-[#181825] dark:bg-[#181825] border-b border-gray-800 dark:border-gray-700">
             <div className="flex items-center gap-1.5">
               <Circle size={12} fill="#ff5f57" stroke="none" />
               <Circle size={12} fill="#febc2e" stroke="none" />
