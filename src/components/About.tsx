@@ -4,11 +4,20 @@ import { useEffect, useRef } from 'react';
 const experienceData = [
   {
     position: "Golang Developer",
-    company: "Kiatnakin Phatra Financial Group",
-    period: "Oct. 2024 - Present",
-    startDate: "2024-10-01",
+    company: "Null",
+    period: "July. 2025",
+    startDate: "2025-07-01",
     endDate: null,    
     current: true,
+    workType: "Contract"
+  },
+  {
+    position: "Golang Developer",
+    company: "Kiatnakin Phatra Financial Group",
+    period: "Oct. 2024 - Jun. 2025",
+    startDate: "2024-10-01",
+    endDate: "2025-06-30",    
+    current: false,
     workType: "Contract"
   },
   {
