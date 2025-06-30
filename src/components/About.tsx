@@ -34,19 +34,23 @@ const experienceData = [
 const calculateDuration = (startDate: string, endDate: string | null, current: boolean) => {
   const start = new Date(startDate);
   const end = current ? new Date() : new Date(endDate!);
-  
-  const diffTime = Math.abs(end.getTime() - start.getTime());
-  const diffYears = diffTime / (1000 * 60 * 60 * 24 * 365.25);
-  
-  if (diffYears >= 1) {
-    const years = Math.floor(diffYears);
-    const months = Math.floor((diffYears - years) * 12);
-      if (months === 0) {
-      return `${years} ${years === 1 ? 'year' : 'years'}`;
-    } else {
-      return `${years} ${years === 1 ? 'year' : 'years'} ${months} ${months === 1 ? 'month' : 'months'}`;
-    }  } else {
-    const months = Math.floor(diffYears * 12);
+
+  let years = end.getFullYear() - start.getFullYear();
+  let months = end.getMonth() - start.getMonth();
+  let days = end.getDate() - start.getDate();
+
+  if (days < 0) {
+    months -= 1;
+  }
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+  if (years > 0 && months > 0) {
+    return `${years} ${years === 1 ? 'year' : 'years'} ${months} ${months === 1 ? 'month' : 'months'}`;
+  } else if (years > 0) {
+    return `${years} ${years === 1 ? 'year' : 'years'}`;
+  } else {
     return `${months} ${months === 1 ? 'month' : 'months'}`;
   }
 };
