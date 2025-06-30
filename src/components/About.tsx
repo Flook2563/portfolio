@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 const experienceData = [
   {
     position: "Golang Developer",
-    company: "Null",
+    company: "Thai Beverage PLC",
     period: "July. 2025",
     startDate: "2025-07-01",
     endDate: null,    
@@ -35,12 +35,26 @@ const calculateDuration = (startDate: string, endDate: string | null, current: b
   const start = new Date(startDate);
   const end = current ? new Date() : new Date(endDate!);
 
+  // ถ้า startDate > endDate (ยังไม่ถึงวันเริ่มงาน) ให้ return "0 months"
+  if (start > end) {
+    return "0 months";
+  }
+
   let years = end.getFullYear() - start.getFullYear();
   let months = end.getMonth() - start.getMonth();
   let days = end.getDate() - start.getDate();
 
+  // ถ้า endDate เป็นวันสุดท้ายของเดือน ให้นับเดือนนั้นด้วย
+  const isEndOfMonth = (date: Date) => {
+    return date.getDate() === new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  };
+
   if (days < 0) {
     months -= 1;
+  }
+  // เพิ่ม logic: ถ้า endDate เป็นวันสุดท้ายของเดือน ให้นับเดือนนั้นด้วย (เฉพาะกรณีไม่ current)
+  if (!current && isEndOfMonth(end)) {
+    months += 1;
   }
   if (months < 0) {
     years -= 1;
