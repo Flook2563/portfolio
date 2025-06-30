@@ -64,8 +64,13 @@ const calculateDuration = (startDate: string, endDate: string | null, current: b
     return `${years} ${years === 1 ? 'year' : 'years'} ${months} ${months === 1 ? 'month' : 'months'}`;
   } else if (years > 0) {
     return `${years} ${years === 1 ? 'year' : 'years'}`;
-  } else {
+  } else if (months > 0) {
     return `${months} ${months === 1 ? 'month' : 'months'}`;
+  } else {
+    // แสดงจำนวนวัน ถ้า 0 เดือน
+    const diffTime = end.getTime() - start.getTime();
+    const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    return `${days} ${days === 1 ? 'day' : 'days'}`;
   }
 };
 
