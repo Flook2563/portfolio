@@ -31,6 +31,30 @@ const experienceData = [
   }
 ];
 
+const calculateTotalExperienceYears = (
+  experiences: Array<{ startDate: string; endDate: string | null; current: boolean }>
+) => {
+  if (!experiences.length) return { years: 0, months: 0 };
+
+  const totalDays = experiences.reduce((sum, exp) => {
+    const start = new Date(exp.startDate);
+    const end = exp.current ? new Date() : new Date(exp.endDate!);
+
+    if (start > end) return sum;
+
+    const diffTime = end.getTime() - start.getTime();
+    const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    return sum + days;
+  }, 0);
+
+  const totalMonths = Math.floor(totalDays / 30.4375);
+  const years = Math.floor(totalMonths / 12);
+  const months = totalMonths % 12;
+
+  return { years, months };
+};
+
 const calculateDuration = (startDate: string, endDate: string | null, current: boolean) => {
   const start = new Date(startDate);
   const end = current ? new Date() : new Date(endDate!);
@@ -76,6 +100,7 @@ const calculateDuration = (startDate: string, endDate: string | null, current: b
 
 export const About = () => {
   const aboutRef = useRef<HTMLDivElement>(null);
+  const totalExperience = calculateTotalExperienceYears(experienceData);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -113,7 +138,7 @@ export const About = () => {
                   Bio
                 </h3>
                 <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                  Software Developer with 4 years of experience specializing in Full-Stack and Backend development. Skilled in designing and building high-performance web applications and APIs. Passionate about learning new technologies and committed to delivering high-quality solutions that meet business goals.
+                  Software Developer with <span className="text-blue-500 font-semibold">{totalExperience.years} {totalExperience.years === 1 ? 'year' : 'years'} {totalExperience.months} {totalExperience.months === 1 ? 'month' : 'months'}</span> of experience specializing in Full-Stack and Backend development. Skilled in designing and building high-performance web applications and APIs. Passionate about learning new technologies and committed to delivering high-quality solutions that meet business goals.
                 </p>
               </div>
               
