@@ -224,7 +224,7 @@ export const About = () => {
                 <span className="px-4 py-1 bg-secondary text-secondary-foreground rounded-full text-sm font-medium hover:scale-110 hover:shadow-lg transition-all duration-300 ease-in-out cursor-default">Backend</span>
               </div>
               <a
-                href="https://drive.google.com/file/d/1rk9UPBBHQMgU9cUPcjz3cexRzBwP0H3H/view?usp=sharing"
+                href="https://drive.google.com/file/d/1CTQ2ISLy6lrf9TJcQOumjrm1i5ULcoGT/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 px-6 rounded-lg shadow-md flex items-center justify-center transition-colors duration-300"
